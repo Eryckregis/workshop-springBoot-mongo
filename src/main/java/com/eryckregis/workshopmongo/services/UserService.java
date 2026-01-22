@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 
 import java.util.List;
 import java.util.Optional;
@@ -25,7 +26,7 @@ public class UserService {
     }
 
     @GetMapping
-    public User findByID(String id) {
+    public User findById(String id) {
         Optional<User> obj = userRepository.findById(id);
         return obj.orElseThrow(() -> new objectNotFoundException("Objeto não encontrado"));
     }
@@ -35,17 +36,26 @@ public class UserService {
         return userRepository.insert(obj);
     }
 
+    @DeleteMapping
+    public void deleteById(String id) {
+        findById(id);
+        userRepository.deleteById(id);
+    }
+
+    @PutMapping
+    public User update(User obj) {
+        User newObj = findById(obj.getId());
+        updateData(newObj, obj);
+        return userRepository.save(newObj);
+    }
+
+    private void updateData(User newObj ,User obj) {
+        newObj.setName(obj.getName());
+        newObj.setEmail(obj.getEmail());
+    }
+
     public User fromDTO(UserDTO objDto) {
         return new User(objDto.getId(), objDto.getName(), objDto.getEmail());
     }
 
-    @DeleteMapping
-    public User deleteById(String id) {
-        Optional<User> obj = userRepository.findById(id);
-        if (obj.isPresent()) {
-            userRepository.deleteById(id);
-        }
-        return obj.orElseThrow(() -> new objectNotFoundException("Objeto não encontrado"));
-
-    }
 }
