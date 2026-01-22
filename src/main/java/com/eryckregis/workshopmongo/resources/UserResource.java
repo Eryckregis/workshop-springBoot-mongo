@@ -1,7 +1,6 @@
 package com.eryckregis.workshopmongo.resources;
 
 import com.eryckregis.workshopmongo.domain.User;
-
 import com.eryckregis.workshopmongo.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,11 +14,13 @@ import java.util.List;
 public class UserResource {
 
     @Autowired
-private UserService userService;
+    private UserService userService;
+
 
     @GetMapping
     public ResponseEntity<List<User>> findAll(){
         List<User> list = userService.findAll();
         return ResponseEntity.ok().body(list);
     }
+
 }
