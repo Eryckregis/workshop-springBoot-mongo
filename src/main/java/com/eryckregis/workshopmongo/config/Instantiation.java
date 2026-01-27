@@ -3,6 +3,7 @@ package com.eryckregis.workshopmongo.config;
 import com.eryckregis.workshopmongo.domain.Post;
 import com.eryckregis.workshopmongo.domain.User;
 import com.eryckregis.workshopmongo.dto.AuthorDTO;
+import com.eryckregis.workshopmongo.dto.CommentDTO;
 import com.eryckregis.workshopmongo.repositories.PostRepository;
 import com.eryckregis.workshopmongo.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,8 +37,15 @@ public class Instantiation implements CommandLineRunner {
 
         userRepository.saveAll(Arrays.asList(maria,alex,bob));
 
-        Post post1 = new Post(null,sdf.parse("21/03/2018"),"vou viajar para sao paulo.", "Abracos",new AuthorDTO(maria));
-        Post post2 = new Post(null,sdf.parse("23/03/2018"),"bom dia","acordei feliz hoje",new AuthorDTO(maria));
+        Post post1 = new Post(null, sdf.parse("21/03/2018"),"vou viajar para sao paulo.", "Abracos",new AuthorDTO(maria));
+        Post post2 = new Post(null, sdf.parse("23/03/2018"),"bom dia","acordei feliz hoje",new AuthorDTO(maria));
+
+        CommentDTO comment1 = new CommentDTO("boa viagem", sdf.parse("21/03/2018"), new AuthorDTO(alex));
+        CommentDTO comment2 = new CommentDTO("aproveite", sdf.parse("22/03/2018"), new AuthorDTO(bob));
+        CommentDTO comment3 = new CommentDTO("tenha um otimo dia!", sdf.parse("23/03/2018"), new AuthorDTO(alex));
+
+        post1.getComments().addAll(Arrays.asList(comment1,comment2));
+        post2.getComments().addAll(Arrays.asList(comment3));
 
         postRepository.saveAll(Arrays.asList(post1,post2));
 
