@@ -1,7 +1,9 @@
 package com.eryckregis.workshopmongo.services;
 
+import com.eryckregis.workshopmongo.domain.Post;
 import com.eryckregis.workshopmongo.domain.User;
 import com.eryckregis.workshopmongo.dto.UserDTO;
+import com.eryckregis.workshopmongo.repositories.PostRepository;
 import com.eryckregis.workshopmongo.repositories.UserRepository;
 import com.eryckregis.workshopmongo.services.exception.objectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +51,7 @@ public class UserService {
         return userRepository.save(newObj);
     }
 
-    private void updateData(User newObj ,User obj) {
+    private void updateData(User newObj, User obj) {
         newObj.setName(obj.getName());
         newObj.setEmail(obj.getEmail());
     }
